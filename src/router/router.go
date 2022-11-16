@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/leoneville/api-book/src/controllers"
+	"github.com/leoneville/api-book/src/middlewares"
 )
 
 type route struct {
@@ -45,7 +46,7 @@ func GenerateRoutes() *mux.Router {
 	r := mux.NewRouter()
 
 	for _, route := range booksRoutes {
-		r.HandleFunc(route.URI, route.Function).Methods(route.Method)
+		r.HandleFunc(route.URI, middlewares.Logger(route.Function)).Methods(route.Method)
 	}
 
 	return r
